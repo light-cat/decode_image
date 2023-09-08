@@ -14,19 +14,22 @@ enum imagetype{
 
 // 图片结构体
 struct pic_data{
-    char* path;
-    int weight;
-    int height;
+    char path[100]; // 不能使用char *path;会报段错误
     enum imagetype type;
 };
 
+// 存放图片路径的数组
+// 最多只能存放100张图片
+struct pic_data imagesoure[100];
+int image_index=0; // 图片的索引
+
+
 char* path = "./images";
 void scanimage(const char* path){
-    
+
     DIR *dir;
     struct dirent* p;
     char base[1000]; // 存储遍历地址的数组
-
     // 1.首先获得一个文件夹
     if((dir = opendir(path)) == NULL){
         perror("opendir failed\n");
@@ -46,9 +49,10 @@ void scanimage(const char* path){
         strcat(base,p->d_name); // 然后再把内容添加进来
      
         if(p->d_type == DT_REG){
-            printf("%s\n",base);
+            strcpy(imagesoure[image_index].path, base);
+            image_index++;
         }
-        
+
         if(p->d_type == DT_DIR){
             scanimage(base); 
         }
@@ -59,4 +63,7 @@ void scanimage(const char* path){
 int main(void){
     scanimage(path);
     printf("end end end!\n");
+    for(int i=0;i<sizeof(imagesoure) / sizeof(struct pic_data);i++){
+        printf("%s\n",imagesoure[i].path);
+    }
 }
