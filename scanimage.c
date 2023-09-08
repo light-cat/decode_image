@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <dirent.h>
-
+#include <stddef.h>
 #include <string.h>
+#include <config.h>
+#include <fb.h>
+
 
 // 图片类型种类
 enum imagetype{
@@ -61,9 +64,12 @@ void scanimage(const char* path){
 }
 
 int main(void){
+
+    fb_open();// 打开lcd设备
     scanimage(path);
-    printf("end end end!\n");
+   // printf("end end end!\n");
     for(int i=0;i<sizeof(imagesoure) / sizeof(struct pic_data);i++){
-        printf("%s\n",imagesoure[i].path);
+       // printf("%s\n",imagesoure[i].path);
+        show_jpeg_image(imagesoure[i].path);
     }
 }

@@ -21,10 +21,12 @@ export AS LD CC CPP AR NM STRIP OBJCOPY OBJDUMP
 CFLAGS := -Wall -O2 -g -DDEBUG
 # CFLAGS := -Wall -O2 -g
 # 添加头文件路径，不添加的话include目录下的头文件编译时找不到
-CFLAGS += -I $(shell pwd)/include -I/opt/libdecode/include
-
+CFLAGS += -I $(shell pwd)/include -I/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot/lib
+CFLAGS += --sysroot=/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot
 # 链接器的链接参数设置
-LDFLAGS := -ljpeg -lz -lpng -L/opt/libdecode/lib -lpthread
+# LDFLAGS := -ljpeg -lz -lpng -L/opt/libdecode/lib -lpthread
+LDFLAGS := -lpthread -ljpeg
+LDFLAGS +=  --sysroot=/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot
 export CFLAGS LDFLAGS
 
 TOPDIR := $(shell pwd)
@@ -35,18 +37,18 @@ TARGET := imageplayer
 
 # 添加项目中所有用到的源文件，有顶层目录下的.c文件，和子文件夹
 # 添加顶层目录下的.c文件
-obj-y += main.o
-
+# obj-y += main.o
+obj-y += scanimage.o
 # 添加顶层目录下的子文件夹（注意目录名后面加一个/）
 obj-y += display/
-obj-y += image_manage/
+# obj-y += image_manage/
 
 all: 
 	make -C ./ -f $(TOPDIR)/Makefile.build
 	$(CC) $(LDFLAGS) -o $(TARGET) built-in.o
 
-cp:
-	cp ../testproject/ ~/porting_x210/rootfs/rootfs/ -rf
+# cp:
+# 	cp ../testproject/ ~/porting_x210/rootfs/rootfs/ -rf
 
 clean:
 	rm -f $(shell find -name "*.o")
