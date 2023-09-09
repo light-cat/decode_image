@@ -3,6 +3,10 @@
 
 #define FBDEVICE "/dev/fb0"
 
+// 触摸屏设备
+#define TOUCHDEVICE "/dev/input/event1"
+
+
 #ifdef DEBUG
 #define debug(...)                                                      \
         {                                                               \

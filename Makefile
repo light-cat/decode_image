@@ -21,12 +21,14 @@ export AS LD CC CPP AR NM STRIP OBJCOPY OBJDUMP
 CFLAGS := -Wall -O2 -g -DDEBUG
 # CFLAGS := -Wall -O2 -g
 # 添加头文件路径，不添加的话include目录下的头文件编译时找不到
-CFLAGS += -I $(shell pwd)/include -I/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot/lib
+CFLAGS += -I $(shell pwd)/include 
+# 添加库文件路径
 CFLAGS += --sysroot=/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot
 # 链接器的链接参数设置
 # LDFLAGS := -ljpeg -lz -lpng -L/opt/libdecode/lib -lpthread
 LDFLAGS := -lpthread -ljpeg
-LDFLAGS +=  --sysroot=/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot
+LDFLAGS +=  --sysroot=/opt/atk-dlrv1126-toolchain/arm-buildroot-linux-gnueabihf/sysroot  
+
 export CFLAGS LDFLAGS
 
 TOPDIR := $(shell pwd)
@@ -41,7 +43,7 @@ TARGET := imageplayer
 obj-y += scanimage.o
 # 添加顶层目录下的子文件夹（注意目录名后面加一个/）
 obj-y += display/
-# obj-y += image_manage/
+obj-y += imagemanager/
 
 all: 
 	make -C ./ -f $(TOPDIR)/Makefile.build

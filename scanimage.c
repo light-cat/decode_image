@@ -8,18 +8,6 @@
 #include <fb.h>
 
 
-// 图片类型种类
-enum imagetype{
-    BMP,
-    JPG,
-    PNG
-};
-
-// 图片结构体
-struct pic_data{
-    char path[100]; // 不能使用char *path;会报段错误
-    enum imagetype type;
-};
 
 // 存放图片路径的数组
 // 最多只能存放100张图片
@@ -68,8 +56,9 @@ int main(void){
     fb_open();// 打开lcd设备
     scanimage(path);
    // printf("end end end!\n");
-    for(int i=0;i<sizeof(imagesoure) / sizeof(struct pic_data);i++){
-       // printf("%s\n",imagesoure[i].path);
-        show_jpeg_image(imagesoure[i].path);
-    }
+    // for(int i=0;i<sizeof(imagesoure) / sizeof(struct pic_data);i++){
+    //    // printf("%s\n",imagesoure[i].path);
+    //     show_jpeg_image(imagesoure[i].path);
+    // }
+    ts_updown();
 }

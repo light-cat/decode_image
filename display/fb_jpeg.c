@@ -68,7 +68,8 @@ int show_jpeg_image(const char *path)
     else
         min_h = cinfo.output_height;
     //读取数据
-    valid_bytes = min_w * bytes_per_pixel;//一行的有效字节数 表示真正写入到 LCD 显存的一行数据的大小
+    valid_bytes = min_w * bytes_per_pixel;//表示lcd一行显存的 大小
+    
     while (cinfo.output_scanline < min_h) {
         jpeg_read_scanlines(&cinfo, (unsigned char **)&jpeg_line_buf, 1);//每次读取一行数据
         //将读取到的 BGR888 数据转为 RGB888
